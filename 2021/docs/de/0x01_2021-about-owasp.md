@@ -6,7 +6,7 @@ lang:   "de"
 ---
 {%- set parent = extra.osib.document ~ "." ~ extra.osib.version -%}
 {%- set osib = parent ~ ".index" -%}
-{%- set parent_20217 = extra.osib.document ~ ".2017" -%}
+{%- set parent_2017 = extra.osib.document ~ ".2017" -%}
 
 # Über OWASP
 
