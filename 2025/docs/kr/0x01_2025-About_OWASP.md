@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../assets/css/RC-stylesheet.css" />
+<link rel="stylesheet" href="../assets/css/RC-stylesheet.css" />
 
 # OWASP 소개 (About OWASP)
 

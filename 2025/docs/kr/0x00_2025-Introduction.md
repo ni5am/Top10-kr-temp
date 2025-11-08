@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="../../assets/css/RC-stylesheet.css" />
+<link rel="stylesheet" href="../assets/css/RC-stylesheet.css" />
 
 # 소개 (Introduction)
 
-![OWASP Logo](../../assets/TOP_10_logo_Final_Logo_Colour.png)
+![OWASP Logo](../assets/TOP_10_logo_Final_Logo_Colour.png)
 
 OWASP Top 10의 8번째 버전에 오신 것을 환영합니다!
 
@@ -30,7 +30,7 @@ OWASP Top 10의 8번째 버전에 오신 것을 환영합니다!
 
 2025년 Top 10에는 두 개의 새로운 카테고리와 하나의 통합이 있습니다. 우리는 가능한 한 증상보다 근본 원인에 초점을 맞추기 위해 노력했습니다. 소프트웨어 엔지니어링과 소프트웨어 보안의 복잡성으로 인해 어느 정도의 중복 없이 10개의 카테고리를 만드는 것은 기본적으로 불가능합니다.
 
-![Mapping](../../assets/2025-mappings.png)
+![Mapping](../assets/2025-mappings.png)
 
 * **[A01:2025 - 접근 제어 취약점 (Broken Access Control)](A01_2025-Broken_Access_Control.md)** 은 가장 심각한 애플리케이션 보안 위험으로 #1 위치를 유지합니다. 기여된 데이터에 따르면 테스트된 애플리케이션의 평균 3.73%가 이 카테고리의 40개 공통 취약점 열거(Common Weakness Enumerations, CWE) 중 하나 이상을 가지고 있었습니다. 위 그림의 점선으로 표시된 바와 같이, 서버 측 요청 위조(Server-Side Request Forgery, SSRF)가 이 카테고리에 포함되었습니다.
 * **[A02:2025 - 보안 설정 오류 (Security Misconfiguration)](A02_2025-Security_Misconfiguration.md)** 는 2021년의 #5에서 2025년 #2로 상승했습니다. 이번 주기 데이터에서 설정 오류가 더 널리 퍼져 있습니다. 테스트된 애플리케이션의 3.00%가 이 카테고리의 16개 CWE 중 하나 이상을 가지고 있었습니다. 소프트웨어 엔지니어링이 설정 기반 애플리케이션 동작의 양을 계속 증가시키고 있기 때문에 이는 놀라운 일이 아닙니다.

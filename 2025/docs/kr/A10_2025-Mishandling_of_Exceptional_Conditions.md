@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../assets/css/RC-stylesheet.css" />
+<link rel="stylesheet" href="../assets/css/RC-stylesheet.css" />
 
 # A10:2025 예외 조건 처리 오류 (Mishandling of Exceptional Conditions)
 

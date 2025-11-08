@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../assets/css/RC-stylesheet.css" />
+<link rel="stylesheet" href="../assets/css/RC-stylesheet.css" />
 
 # 애플리케이션 보안 위험이란 무엇인가? (What are Application Security Risks?)
 공격자는 잠재적으로 애플리케이션을 통해 비즈니스나 조직에 해를 끼칠 수 있는 많은 다른 경로를 사용할 수 있습니다. 이러한 각 방법은 조사가 필요한 잠재적 위험을 제기합니다.

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../assets/css/RC-stylesheet.css" />
+<link rel="stylesheet" href="../assets/css/RC-stylesheet.css" />
 
 # 현대적 애플리케이션 보안 프로그램 수립 (Establishing a Modern Application Security Program)
 
