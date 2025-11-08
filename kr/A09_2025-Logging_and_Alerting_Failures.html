@@ -1,0 +1,1027 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OWASP Top 10 2021 Draft">
+      
+      
+      
+        <link rel="canonical" href="https://owasp.org/Top10/kr/A09_2025-Logging_and_Alerting_Failures.html">
+      
+      
+        <link rel="prev" href="A08_2025-Software_or_Data_Integrity_Failures.html">
+      
+      
+        <link rel="next" href="A10_2025-Mishandling_of_Exceptional_Conditions.html">
+      
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>A09 2025 Logging and Alerting Failures - OWASP Top 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a092025-logging-alerting-failures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Top 10" class="md-header__button md-logo" aria-label="OWASP Top 10" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Top 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A09 2025 Logging and Alerting Failures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/Top10" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/Top10
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Top 10" class="md-nav__button md-logo" aria-label="OWASP Top 10" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Top 10
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/Top10" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/Top10
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Kr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x00_2025-Introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x00 2025 Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x01_2025-About_OWASP.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x01 2025 About OWASP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x02_2025-What_are_Application_Security_Risks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x02 2025 What are Application Security Risks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x03_2025-Establishing_a_Modern_Application_Security_Program.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x03 2025 Establishing a Modern Application Security Program
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A01_2025-Broken_Access_Control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A01 2025 Broken Access Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A02_2025-Security_Misconfiguration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A02 2025 Security Misconfiguration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A03_2025-Software_Supply_Chain_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A03 2025 Software Supply Chain Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A04_2025-Cryptographic_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A04 2025 Cryptographic Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A05_2025-Injection.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A05 2025 Injection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A06_2025-Insecure_Design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A06 2025 Insecure Design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A07_2025-Authentication_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A07 2025 Authentication Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A08_2025-Software_or_Data_Integrity_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A08 2025 Software or Data Integrity Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    A09 2025 Logging and Alerting Failures
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="A09_2025-Logging_and_Alerting_Failures.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    A09 2025 Logging and Alerting Failures
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      배경 (Background).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#score-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      점수 표 (Score table).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      설명 (Description).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      예방 방법 (How to prevent).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-attack-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      공격 시나리오 예 (Example attack scenarios).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      참고 자료 (References).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-list-of-mapped-cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      매핑된 CWE 목록 (List of Mapped CWEs)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A10_2025-Mishandling_of_Exceptional_Conditions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A10 2025 Mishandling of Exceptional Conditions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="X01_2025-Next_Steps.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    X01 2025 Next Steps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      배경 (Background).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#score-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      점수 표 (Score table).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      설명 (Description).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      예방 방법 (How to prevent).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-attack-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      공격 시나리오 예 (Example attack scenarios).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      참고 자료 (References).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-list-of-mapped-cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      매핑된 CWE 목록 (List of Mapped CWEs)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><link rel="stylesheet" href="../assets/css/RC-stylesheet.css" /></p>
+<h1 id="a092025-logging-alerting-failures">A09:2025 로깅 및 알림 실패 (Logging &amp; Alerting Failures)<a class="headerlink" href="#a092025-logging-alerting-failures" title="Permanent link">&para;</a></h1>
+<h2 id="background">배경 (Background).<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
+<p>로깅 및 알림 실패는 #9 위치를 유지합니다. 이 카테고리는 관련 로깅 이벤트에 대한 조치를 유도하는 데 필요한 알림 기능을 강조하기 위해 약간의 이름 변경이 있습니다. 이 카테고리는 항상 데이터에서 과소 대표될 것이며, 커뮤니티 설문조사 참가자들로부터 세 번째로 목록의 위치로 투표되었습니다. 이 카테고리는 테스트하기가 매우 어렵고 CVE/CVSS 데이터에서 최소한의 표현만 가지고 있습니다(723개의 CVE만). 그러나 가시성 및 사고 알림 및 포렌식에 매우 큰 영향을 줄 수 있습니다. 이 카테고리에는 <em>로그 파일에 대한 출력 인코딩을 적절하게 처리하는 문제 (CWE-117), 로그 파일에 민감한 데이터 삽입 (CWE-532), 불충분한 로깅 (CWE-778)</em>이 포함됩니다.</p>
+<h2 id="score-table">점수 표 (Score table).<a class="headerlink" href="#score-table" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+   <td>매핑된 CWE (CWEs Mapped) 
+   </td>
+   <td>최대 발생률 (Max Incidence Rate)
+   </td>
+   <td>평균 발생률 (Avg Incidence Rate)
+   </td>
+   <td>최대 커버리지 (Max Coverage)
+   </td>
+   <td>평균 커버리지 (Avg Coverage)
+   </td>
+   <td>평균 가중 악용 (Avg Weighted Exploit)
+   </td>
+   <td>평균 가중 영향 (Avg Weighted Impact)
+   </td>
+   <td>총 발생 횟수 (Total Occurrences)
+   </td>
+   <td>총 CVE (Total CVEs)
+   </td>
+  </tr>
+  <tr>
+   <td>5
+   </td>
+   <td>11.33%
+   </td>
+   <td>3.91%
+   </td>
+   <td>85.96%
+   </td>
+   <td>46.48%
+   </td>
+   <td>7.19
+   </td>
+   <td>2.65
+   </td>
+   <td>260,288
+   </td>
+   <td>723
+   </td>
+  </tr>
+</table>
+
+<h2 id="description">설명 (Description).<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<p>로깅 및 모니터링 없이는 공격과 침해를 탐지할 수 없으며, 알림 없이는 보안 사고 중에 빠르고 효과적으로 대응하기가 매우 어렵습니다. 불충분한 로깅, 지속적인 모니터링, 탐지 및 활성 응답을 시작하는 알림은 다음 경우 발생합니다:</p>
+<ul>
+<li>로그인, 실패한 로그인 및 고가치 거래와 같은 감사 가능한 이벤트가 로깅되지 않거나 일관되지 않게 로깅되는 경우(예: 성공적인 로그인만 로깅하고 실패한 시도는 로깅하지 않음).</li>
+<li>경고 및 오류가 없거나 부적절하거나 불명확한 로그 메시지를 생성하는 경우.</li>
+<li>로그의 무결성이 변조로부터 적절하게 보호되지 않는 경우.</li>
+<li>애플리케이션 및 API의 로그가 의심스러운 활동에 대해 모니터링되지 않는 경우.</li>
+<li>로그가 로컬에만 저장되고 적절하게 백업되지 않는 경우.</li>
+<li>적절한 알림 임계값 및 응답 에스컬레이션 프로세스가 제자리에 있지 않거나 효과적이지 않은 경우. 알림이 합리적인 시간 내에 수신되거나 검토되지 않습니다.</li>
+<li>동적 애플리케이션 보안 테스트(Dynamic Application Security Testing, DAST) 도구(예: Burp 또는 ZAP)에 의한 침투 테스트 및 스캔이 알림을 트리거하지 않는 경우.</li>
+<li>애플리케이션이 실시간 또는 거의 실시간으로 활성 공격을 탐지, 에스컬레이션 또는 알림할 수 없는 경우.</li>
+<li>로깅 및 알림 이벤트를 사용자나 공격자에게 보이게 하여 민감한 정보 누출에 취약한 경우(참조 <a href="A01_2025-Broken_Access_Control.html">A01:2025-접근 제어 취약점 (Broken Access Control)</a>), 또는 로깅되어서는 안 되는 민감한 정보(예: PII 또는 PHI)를 로깅하는 경우.</li>
+<li>로그 데이터가 올바르게 인코딩되지 않은 경우 로깅 또는 모니터링 시스템에 대한 인젝션 또는 공격에 취약한 경우.</li>
+<li>애플리케이션이 오류 및 기타 예외 조건을 누락하거나 잘못 처리하여 시스템이 오류가 있었는지 인식하지 못하고 따라서 문제가 있었다는 것을 로깅할 수 없는 경우.</li>
+<li>특수 상황을 인식하기 위한 알림 발행에 대한 적절한 '사용 사례'가 누락되었거나 오래된 경우.</li>
+<li>너무 많은 거짓 양성 알림으로 인해 중요한 알림과 중요하지 않은 알림을 구별할 수 없어 너무 늦게 인식되거나 전혀 인식되지 않는 경우(SOC 팀의 물리적 과부하).</li>
+<li>탐지된 알림이 사용 사례에 대한 플레이북이 불완전하거나 오래되었거나 누락되어 올바르게 처리할 수 없는 경우.</li>
+</ul>
+<h2 id="how-to-prevent">예방 방법 (How to prevent).<a class="headerlink" href="#how-to-prevent" title="Permanent link">&para;</a></h2>
+<p>애플리케이션의 위험에 따라 개발자는 다음 제어 중 일부 또는 전부를 구현해야 합니다:</p>
+<ul>
+<li>모든 로그인, 접근 제어 및 서버 측 입력 검증 실패가 의심스럽거나 악의적인 계정을 식별하기에 충분한 사용자 컨텍스트로 로깅되고 지연된 포렌식 분석을 허용할 만큼 충분한 시간 동안 보관되도록 하세요.</li>
+<li>보안 제어를 포함하는 앱의 모든 부분이 성공하든 실패하든 로깅되도록 하세요.</li>
+<li>로그 관리 솔루션이 쉽게 소비할 수 있는 형식으로 로그가 생성되도록 하세요.</li>
+<li>로깅 또는 모니터링 시스템에 대한 인젝션 또는 공격을 방지하기 위해 로그 데이터가 올바르게 인코딩되도록 하세요.</li>
+<li>모든 거래가 변조나 삭제를 방지하기 위한 무결성 제어가 있는 감사 추적을 가지도록 하세요. 예: 추가 전용 데이터베이스 테이블 또는 유사한 것.</li>
+<li>오류를 발생시키는 모든 거래가 롤백되고 다시 시작되도록 하세요. 항상 닫힌 상태로 실패하세요.</li>
+<li>애플리케이션이나 사용자가 의심스럽게 행동하면 알림을 발행하세요. 개발자에 대한 이 주제에 대한 가이드를 만들어 이에 대해 코딩하거나 이를 위한 시스템을 구매할 수 있도록 하세요.</li>
+<li>DevSecOps 및 보안 팀은 의심스러운 활동이 보안 운영 센터(Security Operations Center, SOC) 팀에 의해 빠르게 탐지되고 대응되도록 플레이북을 포함한 효과적인 모니터링 및 알림 사용 사례를 수립해야 합니다.</li>
+<li>공격자에 대한 함정으로 애플리케이션에 '허니토큰(honeytokens)'을 추가하세요. 예: 데이터베이스, 데이터, 실제 및/또는 기술 사용자 신원으로. 정상적인 비즈니스에서 사용되지 않기 때문에 모든 액세스는 거의 거짓 양성 없이 알림을 받을 수 있는 로깅 데이터를 생성합니다.</li>
+<li>행동 분석 및 AI 지원은 선택적으로 알림에 대한 낮은 거짓 양성 비율을 지원하는 추가 기술이 될 수 있습니다.</li>
+<li>국가 표준 기술 연구소(National Institute of Standards and Technology, NIST) 800-61r2 이상과 같은 사고 대응 및 복구 계획을 수립하거나 채택하세요. 소프트웨어 개발자에게 애플리케이션 공격 및 사고가 어떻게 보이는지 가르쳐 보고할 수 있도록 하세요.</li>
+</ul>
+<p>OWASP ModSecurity Core Rule Set과 같은 상용 및 오픈소스 애플리케이션 보호 제품과 Elasticsearch, Logstash, Kibana (ELK) 스택과 같은 오픈소스 로그 상관 소프트웨어가 이러한 문제를 해결하는 데 도움이 될 수 있는 사용자 정의 대시보드 및 알림 기능을 제공합니다. 거의 실시간으로 공격에 대응하거나 차단하는 데 도움이 될 수 있는 상용 관찰 가능성 도구도 있습니다.</p>
+<h2 id="example-attack-scenarios">공격 시나리오 예 (Example attack scenarios).<a class="headerlink" href="#example-attack-scenarios" title="Permanent link">&para;</a></h2>
+<p><strong>시나리오 #1:</strong> 어린이 건강 계획 제공자의 웹사이트 운영자는 모니터링 및 로깅 부족으로 인해 침해를 탐지할 수 없었습니다. 외부 당사자가 건강 계획 제공자에게 공격자가 350만 명 이상의 어린이의 수천 개의 민감한 건강 기록에 액세스하고 수정했다고 알렸습니다. 사고 후 검토에서 웹사이트 개발자가 중요한 취약점을 해결하지 않았음을 발견했습니다. 시스템에 대한 로깅이나 모니터링이 없었기 때문에 데이터 침해는 2013년부터 진행 중일 수 있었으며, 7년 이상의 기간이었습니다.</p>
+<p><strong>시나리오 #2:</strong> 주요 인도 항공사는 수백만 명의 승객의 10년 이상의 개인 데이터를 포함하는 데이터 침해를 겪었으며, 여기에는 여권 및 신용 카드 데이터가 포함되었습니다. 데이터 침해는 타사 클라우드 호스팅 제공자에서 발생했으며, 일정 시간 후 항공사에 침해를 알렸습니다.</p>
+<p><strong>시나리오 #3:</strong> 주요 유럽 항공사가 GDPR 보고 가능한 침해를 겪었습니다. 침해는 공격자가 40만 개 이상의 고객 결제 기록을 수집한 결제 애플리케이션 보안 취약점을 악용한 것으로 보고되었습니다. 결과적으로 항공사는 개인정보 보호 규제 기관에 의해 2천만 파운드의 벌금을 부과받았습니다.</p>
+<h2 id="references">참고 자료 (References).<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://top10proactive.owasp.org/archive/2024/the-top-10/c9-security-logging-and-monitoring/">OWASP 사전 대응 제어: C9: 로깅 및 모니터링 구현 (OWASP Proactive Controls: C9: Implement Logging and Monitoring)</a></p>
+</li>
+<li>
+<p><a href="https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md">OWASP 애플리케이션 보안 검증 표준: V16 보안 로깅 및 오류 처리 (OWASP Application Security Verification Standard: V16 Security Logging and Error Handling)</a></p>
+</li>
+<li>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html">OWASP 치트 시트: 애플리케이션 로깅 어휘 (OWASP Cheat Sheet: Application Logging Vocabulary)</a></p>
+</li>
+<li>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">OWASP 치트 시트: 로깅 (OWASP Cheat Sheet: Logging)</a></p>
+</li>
+<li>
+<p><a href="https://csrc.nist.gov/publications/detail/sp/1800-11/final">데이터 무결성: 랜섬웨어 및 기타 파괴적 이벤트로부터 복구 (Data Integrity: Recovering from Ransomware and Other Destructive Events)</a></p>
+</li>
+<li>
+<p><a href="https://csrc.nist.gov/publications/detail/sp/1800-25/final">데이터 무결성: 랜섬웨어 및 기타 파괴적 이벤트에 대한 자산 식별 및 보호 (Data Integrity: Identifying and Protecting Assets Against Ransomware and Other Destructive Events)</a></p>
+</li>
+<li>
+<p><a href="https://csrc.nist.gov/publications/detail/sp/1800-26/final">데이터 무결성: 랜섬웨어 및 기타 파괴적 이벤트 탐지 및 대응 (Data Integrity: Detecting and Responding to Ransomware and Other Destructive Events)</a></p>
+</li>
+</ul>
+<h2 id="cwe-list-of-mapped-cwes">매핑된 CWE 목록 (List of Mapped CWEs)<a class="headerlink" href="#cwe-list-of-mapped-cwes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/117.html">CWE-117 로그에 대한 부적절한 출력 중화 (Improper Output Neutralization for Logs)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/221.html">CWE-221 누락된 정보 손실 (Information Loss of Omission)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/223.html">CWE-223 보안 관련 정보 누락 (Omission of Security-relevant Information)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/532.html">CWE-532 로그 파일에 민감한 정보 삽입 (Insertion of Sensitive Information into Log File)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/778.html">CWE-778 불충분한 로깅 (Insufficient Logging)</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Copyright 2021 - OWASP Top 10 team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

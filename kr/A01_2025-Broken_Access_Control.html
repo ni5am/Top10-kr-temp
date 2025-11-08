@@ -1,0 +1,1122 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OWASP Top 10 2021 Draft">
+      
+      
+      
+        <link rel="canonical" href="https://owasp.org/Top10/kr/A01_2025-Broken_Access_Control.html">
+      
+      
+        <link rel="prev" href="0x03_2025-Establishing_a_Modern_Application_Security_Program.html">
+      
+      
+        <link rel="next" href="A02_2025-Security_Misconfiguration.html">
+      
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>A01 2025 Broken Access Control - OWASP Top 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a012025-broken-access-control" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Top 10" class="md-header__button md-logo" aria-label="OWASP Top 10" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Top 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A01 2025 Broken Access Control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/Top10" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/Top10
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Top 10" class="md-nav__button md-logo" aria-label="OWASP Top 10" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Top 10
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/Top10" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/Top10
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Kr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x00_2025-Introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x00 2025 Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x01_2025-About_OWASP.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x01 2025 About OWASP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x02_2025-What_are_Application_Security_Risks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x02 2025 What are Application Security Risks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0x03_2025-Establishing_a_Modern_Application_Security_Program.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0x03 2025 Establishing a Modern Application Security Program
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    A01 2025 Broken Access Control
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="A01_2025-Broken_Access_Control.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    A01 2025 Broken Access Control
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      배경 (Background).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#score-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      점수 표 (Score table).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      설명 (Description).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      예방 방법 (How to prevent).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-attack-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      공격 시나리오 예 (Example attack scenarios).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      참고 자료 (References).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-list-of-mapped-cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      매핑된 CWE 목록 (List of Mapped CWEs)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A02_2025-Security_Misconfiguration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A02 2025 Security Misconfiguration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A03_2025-Software_Supply_Chain_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A03 2025 Software Supply Chain Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A04_2025-Cryptographic_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A04 2025 Cryptographic Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A05_2025-Injection.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A05 2025 Injection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A06_2025-Insecure_Design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A06 2025 Insecure Design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A07_2025-Authentication_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A07 2025 Authentication Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A08_2025-Software_or_Data_Integrity_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A08 2025 Software or Data Integrity Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A09_2025-Logging_and_Alerting_Failures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A09 2025 Logging and Alerting Failures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="A10_2025-Mishandling_of_Exceptional_Conditions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A10 2025 Mishandling of Exceptional Conditions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="X01_2025-Next_Steps.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    X01 2025 Next Steps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      배경 (Background).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#score-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      점수 표 (Score table).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      설명 (Description).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      예방 방법 (How to prevent).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-attack-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      공격 시나리오 예 (Example attack scenarios).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      참고 자료 (References).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-list-of-mapped-cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      매핑된 CWE 목록 (List of Mapped CWEs)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><link rel="stylesheet" href="../assets/css/RC-stylesheet.css" /></p>
+<h1 id="a012025-broken-access-control">A01:2025 접근 제어 취약점 (Broken Access Control)<a class="headerlink" href="#a012025-broken-access-control" title="Permanent link">&para;</a></h1>
+<h2 id="background">배경 (Background).<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
+<p>Top 10에서 #1 위치를 유지하며, 테스트된 애플리케이션의 100%가 어떤 형태의 접근 제어 취약점을 가지고 있는 것으로 발견되었습니다. 주목할 만한 CWE에는 <em>CWE-200: 무단 행위자에 대한 민감한 정보 노출 (Exposure of Sensitive Information to an Unauthorized Actor)</em>, <em>CWE-201: 전송된 데이터를 통한 민감한 정보 노출 (Exposure of Sensitive Information Through Sent Data)</em>, <em>CWE-918 서버 측 요청 위조 (Server-Side Request Forgery, SSRF)</em>, <em>CWE-352: 크로스 사이트 요청 위조 (Cross-Site Request Forgery, CSRF)</em>가 포함됩니다. 이 카테고리는 기여된 데이터에서 발생 횟수가 가장 많고, 관련 CVE 수가 두 번째로 많습니다.</p>
+<h2 id="score-table">점수 표 (Score table).<a class="headerlink" href="#score-table" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+   <td>매핑된 CWE (CWEs Mapped) 
+   </td>
+   <td>최대 발생률 (Max Incidence Rate)
+   </td>
+   <td>평균 발생률 (Avg Incidence Rate)
+   </td>
+   <td>최대 커버리지 (Max Coverage)
+   </td>
+   <td>평균 커버리지 (Avg Coverage)
+   </td>
+   <td>평균 가중 악용 (Avg Weighted Exploit)
+   </td>
+   <td>평균 가중 영향 (Avg Weighted Impact)
+   </td>
+   <td>총 발생 횟수 (Total Occurrences)
+   </td>
+   <td>총 CVE (Total CVEs)
+   </td>
+  </tr>
+  <tr>
+   <td>40
+   </td>
+   <td>20.15%
+   </td>
+   <td>3.74%
+   </td>
+   <td>100.00%
+   </td>
+   <td>42.93%
+   </td>
+   <td>7.04
+   </td>
+   <td>3.84
+   </td>
+   <td>1,839,701
+   </td>
+   <td>32,654
+   </td>
+  </tr>
+</table>
+
+<h2 id="description">설명 (Description).<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<p>접근 제어는 사용자가 의도한 권한 범위를 벗어나 행동할 수 없도록 정책을 강제합니다. 실패는 일반적으로 무단 정보 공개, 모든 데이터의 수정 또는 파괴, 또는 사용자 한계를 벗어난 비즈니스 기능 수행으로 이어집니다. 일반적인 접근 제어 취약점에는 다음이 포함됩니다:</p>
+<ul>
+<li>최소 권한 원칙 위반, 일반적으로 기본적으로 거부(deny by default)로 알려져 있으며, 특정 기능, 역할 또는 사용자에 대해서만 액세스가 부여되어야 하지만 누구나 사용할 수 있는 경우.</li>
+<li>URL 수정(매개변수 조작 또는 강제 탐색), 내부 애플리케이션 상태, 또는 HTML 페이지를 수정하거나 API 요청을 수정하는 공격 도구를 사용하여 접근 제어 검사를 우회하는 경우.</li>
+<li>고유 식별자를 제공하여 다른 사람의 계정 보기 또는 편집을 허용하는 경우(불안전한 직접 객체 참조, insecure direct object references).</li>
+<li>POST, PUT, DELETE에 대한 접근 제어가 누락된 접근 가능한 API.</li>
+<li>권한 상승. 로그인하지 않고 사용자로 행동하거나 사용자로 로그인했을 때 관리자로 행동하는 경우.</li>
+<li>메타데이터 조작, 예: JSON 웹 토큰(JSON Web Token, JWT) 접근 제어 토큰 재생 또는 조작, 권한 상승을 위해 조작된 쿠키 또는 숨겨진 필드, 또는 JWT 무효화 남용.</li>
+<li>CORS 설정 오류로 인해 무단 또는 신뢰할 수 없는 출처에서 API 액세스가 허용되는 경우.</li>
+<li>강제 탐색(URL 추측)으로 인증되지 않은 사용자로 인증된 페이지에 또는 표준 사용자로 권한이 있는 페이지에 접근하는 경우.</li>
+</ul>
+<h2 id="how-to-prevent">예방 방법 (How to prevent).<a class="headerlink" href="#how-to-prevent" title="Permanent link">&para;</a></h2>
+<p>접근 제어는 공격자가 접근 제어 검사나 메타데이터를 수정할 수 없는 신뢰할 수 있는 서버 측 코드 또는 서버리스 API에서 구현될 때만 효과적입니다.</p>
+<ul>
+<li>공개 리소스를 제외하고 기본적으로 거부하세요.</li>
+<li>애플리케이션 전체에서 접근 제어 메커니즘을 한 번 구현하고 재사용하세요. 여기에는 크로스 오리진 리소스 공유(Cross-Origin Resource Sharing, CORS) 사용 최소화가 포함됩니다.</li>
+<li>모델 접근 제어는 사용자가 모든 레코드를 생성, 읽기, 업데이트 또는 삭제할 수 있도록 허용하는 대신 레코드 소유권을 강제해야 합니다.</li>
+<li>고유한 애플리케이션 비즈니스 제한 요구 사항은 도메인 모델에 의해 강제되어야 합니다.</li>
+<li>웹 서버 디렉토리 목록을 비활성화하고 파일 메타데이터(예: .git) 및 백업 파일이 웹 루트 내에 없도록 하세요.</li>
+<li>접근 제어 실패를 로깅하고 적절한 경우(예: 반복 실패) 관리자에게 알림을 보내세요.</li>
+<li>자동화된 공격 도구의 피해를 최소화하기 위해 API 및 컨트롤러 접근에 속도 제한을 구현하세요.</li>
+<li>상태 저장 세션 식별자는 로그아웃 후 서버에서 무효화되어야 합니다. 상태 비저장 JWT 토큰은 공격자의 기회 창을 최소화하기 위해 수명이 짧아야 합니다. 수명이 긴 JWT의 경우, OAuth 표준을 따라 액세스를 취소하는 것이 강력히 권장됩니다.</li>
+<li>간단하고 선언적인 접근 제어를 제공하는 잘 확립된 도구 키트나 패턴을 사용하세요.</li>
+</ul>
+<p>개발자와 QA 직원은 단위 및 통합 테스트에 기능적 접근 제어를 포함해야 합니다.</p>
+<h2 id="example-attack-scenarios">공격 시나리오 예 (Example attack scenarios).<a class="headerlink" href="#example-attack-scenarios" title="Permanent link">&para;</a></h2>
+<p><strong>시나리오 #1:</strong> 애플리케이션이 계정 정보에 액세스하는 SQL 호출에서 검증되지 않은 데이터를 사용합니다:</p>
+<div class="highlight"><pre><span></span><code>pstmt.setString(1, request.getParameter(&quot;acct&quot;));
+ResultSet results = pstmt.executeQuery( );
+</code></pre></div>
+<p>공격자는 단순히 브라우저의 'acct' 매개변수를 수정하여 원하는 계정 번호를 보낼 수 있습니다. 올바르게 검증되지 않으면 공격자는 모든 사용자의 계정에 액세스할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code>https://example.com/app/accountInfo?acct=notmyacct
+</code></pre></div>
+<p><strong>시나리오 #2:</strong> 공격자는 단순히 브라우저가 URL을 대상으로 하도록 강제합니다. 관리자 페이지에 액세스하려면 관리자 권한이 필요합니다.</p>
+<div class="highlight"><pre><span></span><code>https://example.com/app/getappInfo
+https://example.com/app/admin_getappInfo
+</code></pre></div>
+<p>인증되지 않은 사용자가 두 페이지 중 하나에 액세스할 수 있으면 결함입니다. 비관리자가 관리자 페이지에 액세스할 수 있으면 이것도 결함입니다.</p>
+<p><strong>시나리오 #3:</strong> 애플리케이션이 모든 접근 제어를 프론트엔드에 배치합니다. 공격자는 브라우저에서 실행되는 JavaScript 코드로 인해 <code>https://example.com/app/admin_getappInfo</code>에 도달할 수 없지만, 단순히 다음을 실행할 수 있습니다:</p>
+<div class="highlight"><pre><span></span><code>$ curl https://example.com/app/admin_getappInfo
+</code></pre></div>
+<p>명령줄에서.</p>
+<h2 id="references">참고 자료 (References).<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://top10proactive.owasp.org/archive/2024/the-top-10/c1-accesscontrol/">OWASP 사전 대응 제어: C1: 접근 제어 구현 (OWASP Proactive Controls: C1: Implement Access Control)</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/5.0/en/0x17-V8-Authorization.md">OWASP 애플리케이션 보안 검증 표준: V8 인증 (OWASP Application Security Verification Standard: V8 Authorization)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/README">OWASP 테스트 가이드: 인증 테스트 (OWASP Testing Guide: Authorization Testing)</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP 치트 시트: 인증 (OWASP Cheat Sheet: Authorization)</a></li>
+<li><a href="https://portswigger.net/blog/exploiting-cors-misconfigurations-for-bitcoins-and-bounties">PortSwigger: CORS 설정 오류 악용 (PortSwigger: Exploiting CORS misconfiguration)</a></li>
+<li><a href="https://www.oauth.com/oauth2-servers/listing-authorizations/revoking-access/">OAuth: 액세스 취소 (OAuth: Revoking Access)</a></li>
+</ul>
+<h2 id="cwe-list-of-mapped-cwes">매핑된 CWE 목록 (List of Mapped CWEs)<a class="headerlink" href="#cwe-list-of-mapped-cwes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/22.html">CWE-22 제한된 디렉토리에 대한 경로명의 부적절한 제한 ('경로 순회', Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/23.html">CWE-23 상대 경로 순회 (Relative Path Traversal)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/36.html">CWE-36 절대 경로 순회 (Absolute Path Traversal)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/59.html">CWE-59 파일 액세스 전 부적절한 링크 해석 ('링크 따르기', Improper Link Resolution Before File Access ('Link Following'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/61.html">CWE-61 UNIX 심볼릭 링크 (심링크) 따르기 (UNIX Symbolic Link (Symlink) Following)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/65.html">CWE-65 Windows 하드 링크 (Windows Hard Link)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/200.html">CWE-200 무단 행위자에 대한 민감한 정보 노출 (Exposure of Sensitive Information to an Unauthorized Actor)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/201.html">CWE-201 전송된 데이터를 통한 민감한 정보 노출 (Exposure of Sensitive Information Through Sent Data)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/219.html">CWE-219 웹 루트 아래에 민감한 데이터가 있는 파일 저장 (Storage of File with Sensitive Data Under Web Root)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/276.html">CWE-276 잘못된 기본 권한 (Incorrect Default Permissions)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/281.html">CWE-281 권한의 부적절한 보존 (Improper Preservation of Permissions)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/282.html">CWE-282 부적절한 소유권 관리 (Improper Ownership Management)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/283.html">CWE-283 검증되지 않은 소유권 (Unverified Ownership)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/284.html">CWE-284 부적절한 접근 제어 (Improper Access Control)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/285.html">CWE-285 부적절한 인증 (Improper Authorization)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/352.html">CWE-352 크로스 사이트 요청 위조 (Cross-Site Request Forgery, CSRF)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/359.html">CWE-359 무단 행위자에 대한 개인 정보 노출 (Exposure of Private Personal Information to an Unauthorized Actor)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/377.html">CWE-377 불안전한 임시 파일 (Insecure Temporary File)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/379.html">CWE-379 불안전한 권한이 있는 디렉토리에 임시 파일 생성 (Creation of Temporary File in Directory with Insecure Permissions)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/402.html">CWE-402 새로운 영역으로 프라이빗 리소스 전송 ('리소스 누수', Transmission of Private Resources into a New Sphere ('Resource Leak'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/424.html">CWE-424 대체 경로의 부적절한 보호 (Improper Protection of Alternate Path)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/425.html">CWE-425 직접 요청 ('강제 탐색', Direct Request ('Forced Browsing'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/441.html">CWE-441 의도하지 않은 프록시 또는 중개자 ('혼란된 대리인', Unintended Proxy or Intermediary ('Confused Deputy'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/497.html">CWE-497 무단 제어 영역에 대한 민감한 시스템 정보 노출 (Exposure of Sensitive System Information to an Unauthorized Control Sphere)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538 외부에서 액세스 가능한 파일 또는 디렉토리에 민감한 정보 삽입 (Insertion of Sensitive Information into Externally-Accessible File or Directory)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/540.html">CWE-540 소스 코드에 민감한 정보 포함 (Inclusion of Sensitive Information in Source Code)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/548.html">CWE-548 디렉토리 목록을 통한 정보 노출 (Exposure of Information Through Directory Listing)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/552.html">CWE-552 외부 당사자가 액세스 가능한 파일 또는 디렉토리 (Files or Directories Accessible to External Parties)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/566.html">CWE-566 사용자 제어 SQL 기본 키를 통한 인증 우회 (Authorization Bypass Through User-Controlled SQL Primary Key)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/601.html">CWE-601 신뢰할 수 없는 사이트로의 URL 리디렉션 ('오픈 리디렉트', URL Redirection to Untrusted Site ('Open Redirect'))</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/615.html">CWE-615 소스 코드 주석에 민감한 정보 포함 (Inclusion of Sensitive Information in Source Code Comments)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/639.html">CWE-639 사용자 제어 키를 통한 인증 우회 (Authorization Bypass Through User-Controlled Key)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/668.html">CWE-668 잘못된 영역에 리소스 노출 (Exposure of Resource to Wrong Sphere)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/732.html">CWE-732 중요한 리소스에 대한 잘못된 권한 할당 (Incorrect Permission Assignment for Critical Resource)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/749.html">CWE-749 노출된 위험한 메서드 또는 함수 (Exposed Dangerous Method or Function)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/862.html">CWE-862 누락된 인증 (Missing Authorization)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/863.html">CWE-863 잘못된 인증 (Incorrect Authorization)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/918.html">CWE-918 서버 측 요청 위조 (Server-Side Request Forgery, SSRF)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/922.html">CWE-922 민감한 정보의 불안전한 저장 (Insecure Storage of Sensitive Information)</a></p>
+</li>
+<li>
+<p><a href="https://cwe.mitre.org/data/definitions/1275.html">CWE-1275 부적절한 SameSite 속성을 가진 민감한 쿠키 (Sensitive Cookie with Improper SameSite Attribute)</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Copyright 2021 - OWASP Top 10 team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
